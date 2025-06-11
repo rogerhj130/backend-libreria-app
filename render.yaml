@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: libreria-backend-api
+    env: java
+    plan: free
+    buildCommand: "mvn clean install"
+    startCommand: "java -jar target/users-backend-0.0.1-SNAPSHOT.jar"
+    envVars:
+      - key: JAVA_VERSION
+        value: 17
+      # Las otras variables que ya configuraste en el dashboard de Render 
+      # (como STRIPE_SECRET_KEY, etc.) serán leídas automáticamente.
+      # No es necesario ponerlas aquí si ya están en la sección "Environment".
