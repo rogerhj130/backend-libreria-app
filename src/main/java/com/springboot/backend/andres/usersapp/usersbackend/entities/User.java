@@ -54,6 +54,7 @@ public class User implements IUser {
     private String password;
 
   
+  
 
     @JsonIgnoreProperties({"handler", "hibernateLazyInitializer"})
     @ManyToMany(fetch = FetchType.LAZY)

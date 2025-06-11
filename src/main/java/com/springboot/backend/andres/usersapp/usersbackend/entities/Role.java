@@ -13,6 +13,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -28,6 +29,10 @@ public class Role {
     // Los nombres de roles suelen ser identificadores clave, como "ROLE_ADMIN", "ROLE_VENTAS".
     @Column(unique = true, nullable = false)
     private String name;
+
+    // opcional: puedes también mapear la inversa
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users = new HashSet<>();
 
     // La relación con RolePermiso.
     // Cambiamos List a Set para evitar duplicados y mejorar el rendimiento.
