@@ -36,6 +36,16 @@ public class Venta {
 
     @ManyToOne
     private User usuario;
+
+    private boolean pagada = false;
+
+    public boolean isPagada() {
+        return pagada;
+    }
+
+    public void setPagada(boolean pagada) {
+        this.pagada = pagada;
+    }
     
     public Venta() {
         fechaVenta = LocalDateTime.now();
