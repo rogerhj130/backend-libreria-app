@@ -48,6 +48,8 @@ public class SpringSecurityConfig {
                 .requestMatchers(HttpMethod.GET,"/api/ventas/enviar-pdf").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/vistas/count").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/vistas").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/stripe/create-checkout-session").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/stripe/webhook").permitAll()
     
 
                 .requestMatchers(HttpMethod.GET, "/api/users/{id}").hasAnyAuthority("USERS_VIEW", "ADMIN_PANEL_ACCESS") // Agregué ADMIN_PANEL_ACCESS como un comodín para administradores
@@ -263,7 +265,7 @@ public class SpringSecurityConfig {
     CorsConfigurationSource configurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOriginPatterns(Arrays.asList("*"));
-        config.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+        config.setAllowedOrigins(Arrays.asList("https://classy-snickerdoodle-9f37c8.netlify.app"));
         config.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE"));
         config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         config.setAllowCredentials(true);
