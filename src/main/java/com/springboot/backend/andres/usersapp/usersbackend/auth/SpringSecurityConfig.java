@@ -251,21 +251,11 @@ public class SpringSecurityConfig {
                 .build();
     }
 
-
-//.anyRequest().authenticated())
-  //              .cors(cors -> cors.configurationSource(configurationSource()))
-    //            .addFilter(new JwtAuthenticationFilter(authenticationManager()))
-      //          .addFilter(new JwtValidationFilter(authenticationManager()))
-        //        .csrf(config -> config.disable())
-          //      .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            //    .build();
-   // }
-
     @Bean
     CorsConfigurationSource configurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOriginPatterns(Arrays.asList("*"));
-        config.setAllowedOrigins(Arrays.asList("https://classy-snickerdoodle-9f37c8.netlify.app"));
+        config.setAllowedOrigins(Arrays.asList("https://classy-snickerdoodle-9f37c8.netlify.app","localhost://4200"));
         config.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE"));
         config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         config.setAllowCredentials(true);
