@@ -185,6 +185,15 @@ public class VentaServiceImp implements VentaService {
     }
 
     @Override
+public void marcarVentaComoPagada(Long ventaId) {
+    Venta venta = ventaRepository.findById(ventaId)
+            .orElseThrow(() -> new RuntimeException("Venta no encontrada con ID: " + ventaId));
+
+    venta.setPagada(true); // Asegúrate de que la entidad Venta tenga un campo `pagada` (boolean)
+    ventaRepository.save(venta);
+}
+
+    @Override
     public Optional<Venta> eliminar(Long id) {
         Optional<Venta> vOptional = ventaRepository.findById(id);
         vOptional.ifPresent(vDB -> {

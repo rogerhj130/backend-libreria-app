@@ -1,20 +1,16 @@
 package com.springboot.backend.andres.usersapp.usersbackend.controllers;
 
+import com.springboot.backend.andres.usersapp.usersbackend.services.VentaService;  // IMPORTA TU SERVICIO DE VENTA
 
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import org.springframework.web.bind.annotation.PostMapping;
-
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import com.stripe.model.Event;
-import com.stripe.model.checkout.Session; 
-import com.stripe.net.Webhook;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+
+import com.stripe.model.Event;
+import com.stripe.model.checkout.Session;
+import com.stripe.net.Webhook;
 
 @RestController
 @RequestMapping("/api/stripe/webhook")
@@ -22,6 +18,9 @@ public class StripeWebhookController {
 
     @Value("${stripe.webhook.secret}")
     private String webhookSecret;
+
+    @Autowired
+    private VentaService ventaService;  // INYECCIÓN DEL SERVICIO
 
     @PostMapping
     public ResponseEntity<String> handleStripeWebhook(@RequestBody String payload,
@@ -34,24 +33,36 @@ public class StripeWebhookController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Firma del webhook inválida");
         }
 
-        // Procesa el evento según su tipo
         switch (event.getType()) {
             case "checkout.session.completed":
                 Session session = (Session) event.getDataObjectDeserializer().getObject()
                         .orElseThrow(() -> new RuntimeException("Error deserializando el evento de sesión."));
                 System.out.println("Pago completado para la sesión: " + session.getId());
-                // AQUÍ: Llama a tu servicio para actualizar el estado de la orden en tu DB
-                // session.getMetadata() podría tener el ID de tu orden interna
+
+                String ventaId = session.getMetadata().get("ventaId");
+                if (ventaId != null) {
+                    try {
+                        Long idVenta = Long.parseLong(ventaId);
+                        ventaService.marcarVentaComoPagada(idVenta);
+                        System.out.println("Venta con ID " + ventaId + " marcada como pagada.");
+                    } catch (NumberFormatException nfe) {
+                        System.err.println("ID de venta inválido en metadata: " + ventaId);
+                    } catch (Exception ex) {
+                        System.err.println("Error al actualizar estado de venta: " + ex.getMessage());
+                    }
+                } else {
+                    System.err.println("No se encontró el ID de venta en la metadata.");
+                }
                 break;
+
             case "payment_intent.succeeded":
-                // Si usas Payment Intents directamente, también puedes manejarlo aquí
-                // PaymentIntent paymentIntent = (PaymentIntent) event.getDataObjectDeserializer().getObject().get();
-                // System.out.println("PaymentIntent exitoso: " + paymentIntent.getId());
+                // Maneja otros eventos si es necesario
                 break;
+
             case "payment_intent.payment_failed":
-                // Maneja pagos fallidos
-                // System.out.println("PaymentIntent fallido.");
+                // Maneja pagos fallidos si es necesario
                 break;
+
             // ... otros eventos que quieras manejar
         }
 

@@ -46,7 +46,11 @@ public class SpringSecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/users", "/api/users/page/{page}","/api/users/me").permitAll()
                 .requestMatchers(HttpMethod.GET,"/api/users/me").permitAll()
                 .requestMatchers(HttpMethod.GET,"/api/ventas/enviar-pdf").permitAll()
-                
+                .requestMatchers(HttpMethod.GET, "/api/vistas/count").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/vistas").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/vistas/count").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/vistas").permitAll()
+
                 .requestMatchers(HttpMethod.GET, "/api/users/{id}").hasAnyAuthority("USERS_VIEW", "ADMIN_PANEL_ACCESS") // Agregué ADMIN_PANEL_ACCESS como un comodín para administradores
                 // Para crear un usuario, necesitas el permiso "USERS_CREATE"
                 .requestMatchers(HttpMethod.POST, "/api/users").hasAnyAuthority("USERS_CREATE_VIEW", "ADMIN_PANEL_ACCESS")

@@ -24,4 +24,6 @@ public interface VentaService {
     List<String> crearVentaConDetalle(CrearVentaDto crearVentaDTO);
     VentasReporteDto getVentasPorUsuarioYFecha(Long usuarioId, LocalDate fecha);
     VentasReporteDto getVentasPorUsuarioYRangoFechas(Long usuarioId, LocalDate fechaInicio, LocalDate fechaFin);
+    void marcarVentaComoPagada(Long ventaId);
+
 }

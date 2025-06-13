@@ -7,15 +7,19 @@ import com.stripe.exception.InvalidRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+//import static org.mockito.Mockito.description;
+
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200") 
 @RequestMapping("/api/stripe")
 public class StripePaymentController {
 
@@ -87,8 +91,11 @@ public class StripePaymentController {
             }
 
 
-            Map<String, String> metadata = new HashMap<>();
+           // Map<String, String> metadata = new HashMap<>();
             // metadata.put("internal_venta_id", "ID_GENERADO_POR_TU_DB");
+            Map<String, String> metadata = paymentRequest.getMetadata() != null ?
+             paymentRequest.getMetadata() : new HashMap<>();
+             
 
             String stripeCurrency = "usd"; // La moneda que tu cuenta de Stripe usa (la de liquidación)
             String description = paymentRequest.getDescription();
