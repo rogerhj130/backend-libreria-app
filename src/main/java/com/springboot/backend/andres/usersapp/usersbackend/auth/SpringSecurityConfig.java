@@ -48,8 +48,7 @@ public class SpringSecurityConfig {
                 .requestMatchers(HttpMethod.GET,"/api/ventas/enviar-pdf").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/vistas/count").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/vistas").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/vistas/count").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/vistas").permitAll()
+    
 
                 .requestMatchers(HttpMethod.GET, "/api/users/{id}").hasAnyAuthority("USERS_VIEW", "ADMIN_PANEL_ACCESS") // Agregué ADMIN_PANEL_ACCESS como un comodín para administradores
                 // Para crear un usuario, necesitas el permiso "USERS_CREATE"
@@ -75,15 +74,15 @@ public class SpringSecurityConfig {
                // .requestMatchers(HttpMethod.GET, "/api/users/{id}").hasAnyRole("USER", "ADMIN")
                // .requestMatchers(HttpMethod.POST, "/api/users").hasRole("ADMIN")
                // .requestMatchers(HttpMethod.PUT, "/api/users/{id}").hasRole("ADMIN")
-               // .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").hasRole("ADMIN")
+               
                 
                 // CLIENTES
                // .requestMatchers(HttpMethod.GET, "/api/clientes", "/api/clientes/page/{page}").hasAnyRole("USER", "ADMIN")
                // .requestMatchers(HttpMethod.GET, "/api/clientes/{id}").hasAnyRole("USER", "ADMIN")
                // .requestMatchers(HttpMethod.POST, "/api/clientes").hasAnyRole("USER", "ADMIN")
                // .requestMatchers(HttpMethod.PUT, "/api/clientes/{id}").hasAnyRole("USER", "ADMIN")
-               // .requestMatchers(HttpMethod.DELETE, "/api/clientes/{id}").hasAnyRole("USER", "ADMIN")
-               // .requestMatchers(HttpMethod.GET, "/api/clientes").hasAuthority("ROL_VENTA")
+            
+               
 
                 .requestMatchers(HttpMethod.GET, "/api/clientes", "/api/clientes/{id}").hasAnyAuthority("CLIENTS_VIEW", "ADMIN_PANEL_ACCESS")
                 .requestMatchers(HttpMethod.POST, "/api/clientes").hasAnyAuthority("CLIENTS_CREATE_VIEW", "ADMIN_PANEL_ACCESS")
